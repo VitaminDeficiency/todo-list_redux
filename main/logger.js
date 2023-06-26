@@ -7,7 +7,7 @@ export default function logger(reducer) {
     const nextState = reducer(preState, action, args);
 
     console.log("Next State: ", nextState);
-    console.groupEnd();
+    console.groupEnd(action);
 
     return nextState;
   };
