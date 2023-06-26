@@ -11,7 +11,7 @@ function TodoItem({ todo, index }) {
           onchange="dispatch('toggle',${index})"
         />
         <label>${todo.title}</label>
-        <button class="destroy"></button>
+        <button class="destroy" onclick="dispatch('destroy',${index})"></button>
       </div>
       <input class="edit" value="Create a TodoMVC template" />
     </li>
