@@ -8,6 +8,7 @@ const init = {
     active: (todo) => !todo.completed,
     completed: (todo) => todo.completed,
   },
+  editIndex: null,
 };
 
 const actions = {
@@ -17,24 +18,39 @@ const actions = {
       storage.set(todos);
     }
   },
-
   toggle({ todos }, index) {
     const todo = todos[index];
     todo.completed = !todo.completed;
     storage.set(todos);
   },
-
   toggleAll({ todos }, completed) {
     todos.forEach((todo) => (todo.completed = completed));
     storage.set(todos);
   },
-
   destroy({ todos }, index) {
     todos.splice(index, 1);
     storage.set(todos);
   },
   switchFilter(state, filter) {
     state.filter = filter;
+  },
+  clearCompleted(state) {
+    state.todos = state.todos.filter(state.filters.active);
+    storage.set(state.todos);
+  },
+  edit(state, index) {
+    state.edit = index;
+  },
+  endEdit(state, title) {
+    if (state.edit !== null) {
+      if (title) {
+        state.todos[state.edit].title = title;
+        storage.set(state.todos);
+      } else {
+        this.destroy(state, state.edit);
+      }
+      state.edit = null;
+    }
   },
 };
 
